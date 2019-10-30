@@ -1,0 +1,67 @@
+PImage a;
+int maxpal = 255;
+int numpal = 0;
+color[] goodcolor = new color[maxpal];
+int f;
+int count;
+
+void setup() {
+  
+  size(400, 200);
+  background(255);
+  f = int(random(0,9));
+  takecolor("bg_" + nf(f, 3) + ".jpg");
+}
+
+void draw() {
+  
+  count ++;
+  if (count > 73) {
+       restart();
+       }
+       
+  strokeWeight(20);
+  color myc = somecolor();
+  fill (myc);
+  rect(190, 0, 200, 200);
+  println(myc);
+}
+
+void restart() {
+  count = 0;
+  background(255);
+  f = int(random(0,9));
+  takecolor("bg_" + nf(f, 3) + ".jpg");
+}
+
+
+color somecolor() {
+  // PICK SOME RANDOM COLOR
+  return goodcolor[int(random(numpal))];
+}
+
+void takecolor(String fn) {
+  fn="images.jpg";
+  a = loadImage(fn);
+  image(a,0,0);
+  
+  for (int x=0;x<a.width;x++){
+    for (int y=0;y<a.height;y++) {
+      color c = a.get(x,y);
+      boolean exists = false;
+      for (int n=0;n<numpal;n++) {
+        if (c==goodcolor[n]) {
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) {
+        // add color to pal
+        if (numpal<maxpal) {
+          goodcolor[numpal] = c;
+          numpal++;
+        }
+      }
+    }
+  }
+  }  
